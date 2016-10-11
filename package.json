@@ -21,14 +21,21 @@
     "url": "https://github.com/AppPress/node-faux-knox/issues"
   },
   "devDependencies": {
+    "knox-mpu": "^0.1.6",
     "mocha": "~1.21.4",
     "should": "~4.0.4"
   },
   "dependencies": {
-    "underscore": "~1.6.0",
     "async": "~0.9.0",
+    "js2xml": "^1.0.4",
     "mkdirp": "~0.5.0",
+    "nock": "^8.1.0",
+    "node-uuid": "^1.4.7",
+    "object.defaults": "^0.3.0",
+    "querystring": "^0.2.0",
     "rimraf": "~2.2.1",
-    "walk": "^2.3.1"
+    "underscore": "~1.6.0",
+    "walk": "^2.3.1",
+    "xml2js": "^0.4.17"
   }
 }
