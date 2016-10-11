@@ -40,12 +40,12 @@ Client.prototype.getFile = function (uri, headers, callback) {
 		cancelLocalListeners();
 		if (e.code === 'ENOENT') {
 			stream.statusCode = 404;
-			stream.headers = {};
+			stream.headers = self.config.headers;
 			return callback(null, stream);
 		}
 	}
 	function good() {
-		stream.headers = {};
+		stream.headers = self.config.headers;
 		stream.statusCode = 200;
 		cancelLocalListeners();
 		return callback(null, stream);
@@ -74,10 +74,10 @@ Client.prototype.putFile = function (from, to, headers, callback) {
 		var w = fs.createWriteStream(path.join(self.config.bucket,to));
 
 		w.on('finish', function () {
-			callback(null, {headers:{}, statusCode:200});
+			callback(null, {headers:self.config.headers, statusCode:200});
 		});
 		w.on('error', function (e) {
-			callback(null, {headers:{}, statusCode:404});
+			callback(null, {headers:self.config.headers, statusCode:404});
 		});
 		r.pipe(w);
 	});
@@ -92,7 +92,7 @@ Client.prototype.putBuffer = function (buffer, to, headers, callback) {
 				return callback(err);
 			}
 
-			return callback(null, {headers:{}, statusCode:200});
+			return callback(null, {headers:self.config.headers, statusCode:200});
 		});
 	});
 };
@@ -101,7 +101,7 @@ Client.prototype.deleteFile = function (file, callback) {
 	var self = this;
 
 	fs.unlink(path.join(self.config.bucket,file), function (err) {
-		return callback(null, {headers:{}, statusCode: err ? 404 : 204});
+		return callback(null, {headers:self.config.headers, statusCode: err ? 404 : 204});
 	});
 };
 
@@ -120,7 +120,7 @@ Client.prototype.copyFile = function (from, to, callback) {
 				return callback(err);
 			}
 
-			return callback(null, {headers:{}, statusCode:200});
+			return callback(null, {headers:self.config.headers, statusCode:200});
 		};
 
 		readStream.on('error', done);
