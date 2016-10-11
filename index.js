@@ -251,14 +251,12 @@ Client.prototype.request = function(method,filename,headers){
         }
     }else if(method === 'PUT'){
         //check if part of multipart upload
-
         if(url_parts.query.hasOwnProperty('partNumber') && url_parts.query.hasOwnProperty('uploadId')){
 			nock(hostname)
             .put(filename)
             .once()
             .reply(200, function(uri, data) {
 				var uri_parts = url.parse(uri,true);
-                var s3path = unNormalizedName;
                 var uploadId = uri_parts.query.uploadId;
                 var partNumber = uri_parts.query.partNumber;
                 self.mup[uploadId][partNumber] = new Buffer(data, 'hex');
